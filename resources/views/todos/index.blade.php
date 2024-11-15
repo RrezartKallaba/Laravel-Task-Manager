@@ -85,10 +85,11 @@
                     return true;
                 });
 
-                // Sort by priority (descending) and then by created_at (descending)
-                $filteredTodos = $filteredTodos->sortByDesc(function ($todo) {
-                    return $todo->priority; // High priority first
-                })->sortByDesc('created_at'); // Then sort by created_at (most recent first)
+                // Sort by priority (descending: High > Medium > Low) and then by created_at (most recent first)
+                $filteredTodos = $filteredTodos->sortBy([
+                    ['priority', 'asc'], // High priority first (1 < 2 < 3)
+                    ['created_at', 'desc'], // Most recent first
+                ]);
             @endphp
 
             @forelse ($filteredTodos as $todo)
@@ -144,7 +145,7 @@
                 </tr>
             @empty
                 <tr>
-                    <td colspan="7" class="text-center">No todos found.</td>
+                    <td colspan="8" class="text-center">No todos found.</td>
                 </tr>
             @endforelse
         </tbody>

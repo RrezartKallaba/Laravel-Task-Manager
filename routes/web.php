@@ -11,5 +11,8 @@ Route::get('/', function () {
 Route::middleware('auth')->group(function () {
     Route::resource('todos', TodoController::class);
 });
+Route::get('/home', function() {
+    return redirect('/todos');
+});
 
 Auth::routes();
